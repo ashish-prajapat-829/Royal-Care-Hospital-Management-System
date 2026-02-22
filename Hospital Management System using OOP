@@ -1,0 +1,174 @@
+class Patient:
+
+    def __init__(self, ID, name, age, gender, address, health_condition):
+        
+        self.__id = ID
+        self.__name = name
+        self.__age = age
+        self.__gender = gender
+        self.__address = address
+        self.__health_condition = health_condition
+
+
+    def patient(self):
+        self.__id = input("Patient's ID: ")
+        self.__name = input("Patient's name: ")
+        self.__age = input("Patient's age: ")
+        self.__gender = input("Patient's gender: ")
+        self.__address = input("Patient's address: ")
+        self.__health_condition = input("Patient's health_condition: ")
+        return {"ID":self.__id,"Name":self.__name, "Age":self.__age,"Gender":self.__gender, "Address":self.__address, "Health Condition": self.__health_condition}
+
+class Admin(Patient):
+
+    def __init__(self):
+        self.__username = ""   
+        self.__password = ""
+        self.__login()
+        
+        self.__patients = []
+       
+        self.__menu()
+    
+        print("\033[036m-----Welcome to The Royal Hospital-----")
+
+    def __login(self):
+        print("\033[035m-----Admin Login-----")
+
+        login_details = False
+        Attempts = 1
+        counter = 3
+
+        while login_details == False and Attempts <= 3:
+            uname = input("\nEnter your username: ")
+            password = input("\nEnter your password: ")
+
+            if self.__username == uname and self.__password == password:
+                print("\n\033[032m-----Welcome to the Royal Hospital Management System-----\n")
+                login_details = True
+
+            else:
+                print("\n\033[031mInvalid credentials!\n")
+                Attempts += 1
+                counter -= 1
+                print(f"\n\033[033m{counter} Attempt(s) remaining\n")
+
+                if Attempts > 3:
+                    print("\n\033[031mToo many invalid attempts. \nYour account is now blocked!\n")
+                    exit()
+
+    def __menu(self):
+
+        while True:
+
+            Admin_input = input("""
+        \033[034m*****Royal Hospital***** 
+                                                           
+            \033[032mHow would you like to proceed?
+
+            
+            1. Enter 1 to add a new patient
+            2. Enter 2 to view existing records
+            3. Enter 3 to update records
+            4. Enter 4 to delete an existing record
+            5. Enter 5 to exit
+            
+            Option: """)
+
+            if Admin_input == "1":
+                self.add_patient(Patient)
+            
+            elif Admin_input == "2":
+                self.view_records()
+            
+            elif Admin_input == "3":
+                self.update_record()
+            
+            elif Admin_input == "4":
+                self.delete_record()
+            
+            elif Admin_input == "5":
+                print("\n\033[031m-----You have successfully logged out of the Royal Hospital Management System-----\n")
+                exit()
+            else:
+                print("\n\033[031mInvalid option. Please try again!\n")
+    
+
+
+    def add_patient(self, Patient):
+        print("\n\033[035m-----Register a patient-----\n")
+        print("\n\033[032m***Enter patient's details***\n")
+        Patient = super().patient()
+        self.__patients.append(Patient)
+        
+        print("\n\033[032mPatient has been added successfully\n")
+    
+
+    def view_records(self):
+        print("\n\033[035m-----List of patients-----\n")
+        for p in self.__patients:
+            print(p, "\n")
+    
+
+
+    def update_record(self):
+
+        print("\n\033[032m-----Update Patient's Details-----\n")
+
+        id = input("Enter the Patient's ID: ")
+
+        for pat in self.__patients:
+
+            if pat['ID'] == id:
+                
+                new_id = input("\nUpdate Patient's ID: ")
+                pat['ID'] = new_id
+            
+                new_name = input("\nUpdate patient's name: ")
+                pat['Name'] = new_name
+
+                new_age = input("\nUpdate Patient's age: ")
+                pat['Age'] = new_age
+
+                new_gender = input("\nUpdate Patient's gender: ")               
+                pat['Gender'] = new_gender
+
+                new_address = input("\nUpdate Patient's address: ")
+                pat['Address'] = new_address
+
+                new_health_condition = input("\nUpdate Patient's health condition: ")                
+                pat['Health Condition'] = new_health_condition
+
+
+                print("\n\033[032mPatient record updated successfully\n")
+                return 
+            
+        else:
+            print("\n\033[031mPatient not found.\n")
+
+
+    
+    def delete_record(self):
+
+        print("\n\033[031m-----Delete Patient's Record-----\n")
+        id = input("Enter the Patient's ID: ")
+
+        for pat in self.__patients:
+            if pat['ID'] == id:
+                self.__patients.remove(pat)
+                print("\n\033[032mPatient's record deleted successfully.\n")
+            else:
+                print("\n\033[031mPatient not found!\n")
+    
+# a = Admin()
+# print(a)
+
+
+
+
+
+
+
+
+
+
